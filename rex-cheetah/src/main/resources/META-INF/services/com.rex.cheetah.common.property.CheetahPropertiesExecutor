@@ -1,0 +1,2 @@
+# 外部参数化平台数据获取的实现类(implements CheetahPropertiesExecutor)。必须是全路径类名，例如如下：
+# com.rex.cheetah.common.property.CheetahPropertiesExecutorImpl

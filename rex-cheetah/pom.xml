@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>rex-cheetah</artifactId>
+	<packaging>jar</packaging>
+	<name>Rex Cheetah</name>
+	<parent>
+		<groupId>rex</groupId>
+		<artifactId>root</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>tibco</groupId>
+			<artifactId>tibjms</artifactId>
+			<version>7.0.1</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/tibjms-7.0.1.jar</systemPath>
+		</dependency>
+		
+		<dependency>
+			<groupId>splunk</groupId>
+			<artifactId>splunk-sdk-java</artifactId>
+			<version>1.5.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/splunk-sdk-java-1.5.0.jar</systemPath>
+		</dependency>
+	</dependencies>	
+	<build>
+		<defaultGoal>compile</defaultGoal>
+		<finalName>rex-cheetah-1.0.0</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<testFailureIgnore>true</testFailureIgnore>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

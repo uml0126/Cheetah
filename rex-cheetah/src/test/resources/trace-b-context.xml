@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:cheetah="http://www.rex.com/schema/cheetah"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd 
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+           http://www.rex.com/schema/cheetah http://www.rex.com/schema/cheetah/cheetah-1.0.xsd">
+    
+    <cheetah:application id="application" application="Audit" group="POA_EA_INF" cluster="BCluster" port="2000"/>
+    
+    <cheetah:registry id="registry" type="zookeeper" config="remote"/>
+    
+    <cheetah:protocol id="protocol" type="netty"/>
+    
+    <cheetah:strategy id="strategy" loadbalance="roundRobin"/>
+    
+    <cheetah:monitor id="monitor" type="logService,redisService"/>
+    
+    <cheetah:service id="bInterface1" interface="com.rex.cheetah.trace.service.BInterface1" ref="bInterface1Impl"/>
+    <bean name="bInterface1Impl" class="com.rex.cheetah.trace.service.BInterface1Impl">
+        <property name="aInterface" ref="aInterface"/>
+        <property name="cInterface" ref="cInterface"/>
+    </bean>
+    
+    <cheetah:service id="bInterface2" interface="com.rex.cheetah.trace.service.BInterface2" ref="bInterface2Impl"/>
+    <bean name="bInterface2Impl" class="com.rex.cheetah.trace.service.BInterface2Impl">
+        <property name="aInterface" ref="aInterface"/>
+    </bean>
+    
+    <cheetah:reference id="aInterface" interface="com.rex.cheetah.trace.service.AInterface">
+        <cheetah:method method="asyncToA" async="true"/>
+    </cheetah:reference>
+    
+    <cheetah:reference id="cInterface" interface="com.rex.cheetah.trace.service.CInterface">
+        <cheetah:method method="asyncToC" async="true"/>
+        <cheetah:method method="syncToC" async="false"/>
+    </cheetah:reference>
+    
+    <bean id="eventInterceptor" class="com.rex.cheetah.trace.service.ServiceEventInterceptor"/>
+</beans>
